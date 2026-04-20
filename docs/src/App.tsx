@@ -188,24 +188,24 @@ npm install baspark-react
         <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
           <h3 style={{ marginTop: 0 }}>Basic Usage</h3>
           <code style={{ display: 'block', whiteSpace: 'pre-wrap', fontSize: '14px' }}>
-import MouseSparkReact from 'baspark-react';
+{`import MouseSparkReact from 'baspark-react';
 
 function App() {
-  return &lt;MouseSparkReact color="45,175,255" /&gt;;
-}
+  return <MouseSparkReact color="45,175,255" />;
+}`}
           </code>
         </div>
 
         <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px' }}>
           <h3 style={{ marginTop: 0 }}>With Configuration</h3>
           <code style={{ display: 'block', whiteSpace: 'pre-wrap', fontSize: '14px' }}>
-&lt;MouseSparkReact
+{`<MouseSparkReact
   color="255,100,150"
   scale={2.0}
   opacity={0.8}
   speed={1.5}
   enableTrail={true}
-/&gt;
+/>`}
           </code>
         </div>
 
