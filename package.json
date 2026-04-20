@@ -1,6 +1,6 @@
 {
   "name": "baspark-react",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Blue Archive style mouse spark effect React component",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
