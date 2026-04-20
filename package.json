@@ -2,14 +2,15 @@
   "name": "baspark-react",
   "version": "1.0.0",
   "description": "Blue Archive style mouse spark effect React component",
-  "main": "MouseSparkReact.tsx",
-  "module": "MouseSparkReact.tsx",
-  "types": "MouseSparkReact.tsx",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./MouseSparkReact.tsx",
-      "types": "./MouseSparkReact.tsx",
-      "default": "./MouseSparkReact.tsx"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "keywords": [
@@ -41,9 +42,7 @@
   },
   "homepage": "https://github.com/Sheyiyuan/BASpark#readme",
   "files": [
-    "MouseSparkReact.tsx",
-    "index.ts",
-    "examples.tsx",
+    "dist",
     "README.md",
     "LICENSE"
   ],
@@ -58,12 +57,17 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "docs:install": "cd docs && npm install",
-    "docs:dev": "cd docs && npm run dev",
-    "docs:build": "cd docs && npm run build",
-    "docs:preview": "cd docs && npm run preview",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "docs:install": "pnpm --dir docs install",
+    "docs:dev": "pnpm --dir docs dev",
+    "docs:build": "pnpm --dir docs build",
+    "docs:preview": "pnpm --dir docs preview",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

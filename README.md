@@ -1,7 +1,6 @@
 # BASpark-react
 
 [![npm version](https://img.shields.io/npm/v/baspark-react.svg)](https://www.npmjs.com/package/baspark-react)
-[![npm downloads](https://img.shields.io/npm/dm/baspark-react.svg)](https://www.npmjs.com/package/baspark-react)
 [![React](https://img.shields.io/badge/React-16.8%2B-61dafb?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178c6?logo=typescript)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/github/license/Sheyiyuan/BASpark.svg)](https://github.com/Sheyiyuan/BASpark/blob/main/LICENSE)
@@ -56,17 +55,17 @@ function App() {
 
 ## 配置项
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| color | string | '45,175,255' | RGB 颜色值，格式为 'R,G,B' |
-| scale | number | 1.5 | 特效大小比例 (0.5-3) |
-| opacity | number | 1.0 | 整体透明度 (0.1-1) |
-| speed | number | 1.0 | 动画速度 (0.2-3) |
-| maxTrail | number | 16 | 鼠标拖拽尾迹最大长度 |
-| enableTrail | boolean | false | 是否始终显示鼠标移动尾迹 |
-| className | string | - | 容器 CSS 类名 |
-| style | CSSProperties | - | 容器样式 |
-| containerRef | RefObject | - | 容器 DOM 引用 |
+| 属性         | 类型          | 默认值       | 说明                       |
+| ------------ | ------------- | ------------ | -------------------------- |
+| color        | string        | '45,175,255' | RGB 颜色值，格式为 'R,G,B' |
+| scale        | number        | 1.5          | 特效大小比例 (0.5-3)       |
+| opacity      | number        | 1.0          | 整体透明度 (0.1-1)         |
+| speed        | number        | 1.0          | 动画速度 (0.2-3)           |
+| maxTrail     | number        | 16           | 鼠标拖拽尾迹最大长度       |
+| enableTrail  | boolean       | false        | 是否始终显示鼠标移动尾迹   |
+| className    | string        | -            | 容器 CSS 类名              |
+| style        | CSSProperties | -            | 容器样式                   |
+| containerRef | RefObject     | -            | 容器 DOM 引用              |
 
 ## 完整示例
 
@@ -185,9 +184,9 @@ npm run test:e2e:report # 查看 HTML 报告
 
 ## Authors
 
-| 角色 | 名字 | GitHub |
-|------|------|--------|
-| 原项目作者 | Doom | [@DoomVoss](https://github.com/DoomVoss) |
+| 角色            | 名字      | GitHub                                     |
+| --------------- | --------- | ------------------------------------------ |
+| 原项目作者      | Doom      | [@DoomVoss](https://github.com/DoomVoss)   |
 | React 提取/改造 | Sheyiyuan | [@Sheyiyuan](https://github.com/Sheyiyuan) |
 
 原项目 [BASpark](https://github.com/DoomVoss/BASpark) 由 Doom 开发，采用 WPF + WebView2 混合架构。

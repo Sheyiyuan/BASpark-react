@@ -1,10 +1,14 @@
-name: E2E Tests
+name: CI
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -13,22 +17,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            docs/pnpm-lock.yaml
 
       - name: Install root dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install docs dependencies
-        run: cd docs && npm ci
+        run: pnpm --dir docs install --frozen-lockfile
+
+      - name: Build package
+        run: pnpm build
+
+      - name: Verify package contents
+        run: pnpm pack --dry-run
+
+      - name: Build docs
+        run: pnpm docs:build
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: pnpm test:e2e
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

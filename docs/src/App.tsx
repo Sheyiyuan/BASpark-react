@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import type { RouteRecord } from 'vite-react-ssg'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import MouseSparkReact from './MouseSparkReact'
+import CodeBlock from './CodeBlock.tsx'
 import './App.css'
 
 const i18n = {
@@ -12,7 +15,7 @@ const i18n = {
     btnQuickStart: '快速开始',
     liveDemo: '实时演示',
     effectSettings: '特效设置',
-    effectSettingsDesc: '调整参数自定义火花效果',
+    effectSettingsDesc: '调整参数自定义效果',
     color: '颜色',
     scale: '大小',
     opacity: '透明度',
@@ -20,11 +23,11 @@ const i18n = {
     alwaysTrail: '始终尾迹模式',
     colors: '颜色预设',
     colorsDesc: '点击快速应用配色主题',
-    presetBlue: '蔚蓝档案蓝',
+    presetBlue: '档案蓝',
     presetPink: '樱花粉',
-    presetGreen: '薄荷绿',
-    presetGold: '黄金时刻',
-    presetTwilight: '暮光紫',
+    presetGreen: '薄绿',
+    presetGold: '日落金',
+    presetTwilight: '基佬紫',
     quickStart: '快速开始',
     install: '安装',
     basicUsage: '基础用法',
@@ -46,7 +49,8 @@ const i18n = {
     aboutIncludedDesc: '从 src/Web/index.html 提取核心 Canvas 动效逻辑，重构为独立的 React TypeScript 组件，可直接用于前端项目。',
     aboutVisual: '视觉风格',
     aboutVisualDesc: '灵感源自 Nexon / Yostar 蔚蓝档案。视觉风格版权归原游戏作者所有。',
-    footerAuthors: '原作者: Doom (@DoomVoss) | React提取: Sheyiyuan (@Sheyiyuan)',
+    footerOriginal: '原作者',
+    footerExtraction: 'React 组件提取',
     footerLicense: 'MIT License',
     documentation: '完整文档',
     docTitle: 'BASpark-react 文档',
@@ -115,7 +119,8 @@ const i18n = {
     aboutIncludedDesc: 'Core Canvas logic from src/Web/index.html extracted and refactored into a standalone React TypeScript component.',
     aboutVisual: 'Visual Style',
     aboutVisualDesc: 'Inspired by Nexon / Yostar Blue Archive. Visual style rights belong to the original game authors.',
-    footerAuthors: 'Original: Doom (@DoomVoss) | React extraction: Sheyiyuan (@Sheyiyuan)',
+    footerOriginal: 'Original',
+    footerExtraction: 'React Component Extraction',
     footerLicense: 'MIT License',
     documentation: 'Documentation',
     docTitle: 'BASpark-react Documentation',
@@ -145,8 +150,36 @@ const i18n = {
 
 type Lang = 'zh' | 'en'
 
+const installCode = `npm install baspark-react`
+
+const basicUsageCode = `import MouseSparkReact from 'baspark-react'
+
 function App() {
-  const [lang, setLang] = useState<Lang>('zh')
+  return (
+    <div>
+      <MouseSparkReact />
+      {/* Your app content */}
+    </div>
+  )
+}`
+
+const hookUsageCode = `import { useRef } from 'react'
+import { useMouseSpark } from 'baspark-react'
+
+function CustomComponent() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { boom } = useMouseSpark(canvasRef, {
+    color: '255,200,100',
+    scale: 1.8,
+  })
+
+  // Trigger effect manually
+  const trigger = (x: number, y: number) => boom(x, y)
+
+  return <canvas ref={canvasRef} />
+}`
+
+function App() {
   const [config, setConfig] = useState({
     color: '45,175,255',
     scale: 1.5,
@@ -155,9 +188,27 @@ function App() {
     maxTrail: 16,
     enableTrail: true,
   })
-  const [showDoc, setShowDoc] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const lang: Lang = location.pathname.startsWith('/en') ? 'en' : 'zh'
+  const nextLang: Lang = lang === 'zh' ? 'en' : 'zh'
 
   const t = i18n[lang]
+  const showDoc = location.pathname.endsWith('/docs') || location.pathname.endsWith('/docs/')
+
+  const localizedHomePath = `/${lang}/`
+  const localizedDocsPath = `/${lang}/docs/`
+
+  const goTo = (nextPath: string) => {
+    if (location.pathname === nextPath) return
+    navigate(nextPath)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const toggleLanguage = () => {
+    const targetPath = showDoc ? `/${nextLang}/docs/` : `/${nextLang}/`
+    goTo(targetPath)
+  }
 
   const presets = [
     { name: t.presetBlue, color: '45,175,255', rgb: 'rgb(45,175,255)' },
@@ -171,26 +222,26 @@ function App() {
     return (
       <>
         <MouseSparkReact {...config} />
-        <div style={{ 
-          position: 'fixed', 
-          top: 0, 
-          right: 0, 
-          padding: '16px 20px', 
-          display: 'flex', 
-          gap: '16px', 
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          padding: '16px 20px',
+          display: 'flex',
+          gap: '16px',
           alignItems: 'center',
           zIndex: 10000,
           pointerEvents: 'auto',
         }}>
-          <button 
-            onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+          <button
+            onClick={toggleLanguage}
             className="ba-button-outline"
             style={{ padding: '8px 16px', fontSize: '13px' }}
           >
             {lang === 'zh' ? 'EN' : '中文'}
           </button>
-          <button 
-            onClick={() => setShowDoc(false)}
+          <button
+            onClick={() => goTo(localizedHomePath)}
             className="ba-button"
             style={{ padding: '8px 16px', fontSize: '13px' }}
           >
@@ -231,22 +282,14 @@ function App() {
 
         <section className="quickstart-section">
           <h2>{t.docInstall}</h2>
-          <div className="ba-code-block">
-            <code>npm install baspark-react</code>
-          </div>
+          <CodeBlock language="bash" code={installCode} />
         </section>
 
         <div className="ba-section-divider" />
 
         <section className="quickstart-section">
           <h2>{t.docBasicUsage}</h2>
-          <div className="ba-code-block">
-            <code>{`import MouseSparkReact from 'baspark-react';
-
-function App() {
-  return <MouseSparkReact />;
-}`}</code>
-          </div>
+          <CodeBlock language="tsx" code={basicUsageCode} />
         </section>
 
         <div className="ba-section-divider" />
@@ -284,29 +327,18 @@ function App() {
         <section className="quickstart-section">
           <h2>{t.docHook}</h2>
           <p style={{ marginBottom: '16px', color: 'var(--text-secondary)' }}>{t.docHookDesc}</p>
-          <div className="ba-code-block">
-            <code>{`import { useMouseSpark } from 'baspark-react';
-
-function CustomComponent() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { boom } = useMouseSpark(canvasRef, {
-    color: '255,200,100',
-    scale: 1.8,
-  });
-
-  ${t.docHookManual}
-  const trigger = (x, y) => boom(x, y);
-
-  return <canvas ref={canvasRef} />;
-}`}</code>
-          </div>
+          <CodeBlock language="tsx" code={hookUsageCode} />
         </section>
 
         <div className="ba-section-divider" />
 
         <footer className="footer">
-          <p>{t.footerAuthors}</p>
-          <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a></p>
+          <p>
+            {t.footerOriginal}: <a href="https://github.com/DoomVoss" target="_blank" rel="noopener noreferrer">Doom</a>
+            {' | '}
+            {t.footerExtraction}: <a href="https://github.com/Sheyiyuan" target="_blank" rel="noopener noreferrer">Sheyiyuan</a>
+          </p>
+          <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank" rel="noopener noreferrer">BASpark</a></p>
         </footer>
       </>
     )
@@ -315,17 +347,17 @@ function CustomComponent() {
   return (
     <>
       <MouseSparkReact {...config} />
-      
-      <div style={{ 
-        position: 'fixed', 
-        top: 0, 
-        right: 0, 
-        padding: '16px 20px', 
+
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        padding: '16px 20px',
         zIndex: 10000,
         pointerEvents: 'auto',
       }}>
-        <button 
-          onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+        <button
+          onClick={toggleLanguage}
           className="ba-button-outline"
           style={{ padding: '8px 16px', fontSize: '13px' }}
         >
@@ -347,12 +379,12 @@ function CustomComponent() {
         <p className="hero-link" style={{ marginTop: '4px' }}>
           {t.heroLinkTrail}
         </p>
-        
+
         <div className="hero-actions">
-          <a href="https://github.com/DoomVoss/BASpark" target="_blank" className="ba-button">
+          <a href="https://github.com/Sheyiyuan/BASpark-react" target="_blank" rel="noopener noreferrer" className="ba-button">
             {t.btnGithub}
           </a>
-          <button onClick={() => setShowDoc(true)} className="ba-button-outline">
+          <button onClick={() => goTo(localizedDocsPath)} className="ba-button-outline">
             {t.btnQuickStart}
           </button>
         </div>
@@ -366,7 +398,7 @@ function CustomComponent() {
             <span className="section-badge">{t.liveDemo}</span>
             <h2>{t.effectSettings}</h2>
             <p>{t.effectSettingsDesc}</p>
-            
+
             <div className="setting-item">
               <span className="setting-label">{t.color}</span>
               <input
@@ -378,7 +410,7 @@ function CustomComponent() {
                 placeholder="R,G,B"
               />
             </div>
-            
+
             <div className="setting-item">
               <span className="setting-label">{t.scale}</span>
               <input
@@ -393,7 +425,7 @@ function CustomComponent() {
               />
               <span className="setting-value">{config.scale.toFixed(1)}</span>
             </div>
-            
+
             <div className="setting-item">
               <span className="setting-label">{t.opacity}</span>
               <input
@@ -408,7 +440,7 @@ function CustomComponent() {
               />
               <span className="setting-value">{config.opacity.toFixed(1)}</span>
             </div>
-            
+
             <div className="setting-item">
               <span className="setting-label">{t.speed}</span>
               <input
@@ -423,7 +455,7 @@ function CustomComponent() {
               />
               <span className="setting-value">{config.speed.toFixed(1)}</span>
             </div>
-            
+
             <label className="ba-checkbox" style={{ marginTop: '12px' }}>
               <input
                 type="checkbox"
@@ -438,7 +470,7 @@ function CustomComponent() {
             <span className="section-badge">{t.colors}</span>
             <h2>{t.colorsDesc}</h2>
             <p style={{ marginBottom: '24px' }}></p>
-            
+
             <div className="preset-grid">
               {presets.map((preset) => (
                 <button
@@ -448,8 +480,8 @@ function CustomComponent() {
                   style={{
                     borderColor: preset.rgb,
                     color: preset.rgb,
-                    background: config.color === preset.color 
-                      ? `rgba(${preset.color}, 0.15)` 
+                    background: config.color === preset.color
+                      ? `rgba(${preset.color}, 0.15)`
                       : 'transparent',
                   }}
                 >
@@ -465,25 +497,25 @@ function CustomComponent() {
 
       <section className="about-section">
         <h2>{t.about}</h2>
-        
+
         <div className="ba-card about-card">
           <h3>{t.aboutOrigin}</h3>
           <p>{t.aboutOriginDesc}</p>
         </div>
-        
+
         <div className="ba-card about-card">
           <h3>{t.aboutIncluded}</h3>
           <p>{t.aboutIncludedDesc}</p>
         </div>
-        
+
         <div className="ba-card about-card">
           <h3>{t.aboutVisual}</h3>
           <p>{t.aboutVisualDesc}</p>
         </div>
-        
+
         <div style={{ textAlign: 'center', marginTop: '32px' }}>
-          <button 
-            onClick={() => setShowDoc(true)}
+          <button
+            onClick={() => goTo(localizedDocsPath)}
             className="ba-button-outline"
           >
             {t.btnFullDoc} →
@@ -492,11 +524,42 @@ function CustomComponent() {
       </section>
 
       <footer className="footer">
-        <p>{t.footerAuthors}</p>
-        <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a></p>
+        <p>
+          {t.footerOriginal}: <a href="https://github.com/DoomVoss" target="_blank" rel="noopener noreferrer">Doom</a>
+          {' | '}
+          {t.footerExtraction}: <a href="https://github.com/Sheyiyuan" target="_blank" rel="noopener noreferrer">Sheyiyuan</a>
+        </p>
+        <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank" rel="noopener noreferrer">BASpark</a></p>
       </footer>
     </>
   )
 }
+
+export const routes: RouteRecord[] = [
+  {
+    path: '/',
+    element: <Navigate to="/zh/" replace />,
+  },
+  {
+    path: '/docs/',
+    element: <Navigate to="/zh/docs/" replace />,
+  },
+  {
+    path: '/zh/',
+    element: <App />,
+  },
+  {
+    path: '/zh/docs/',
+    element: <App />,
+  },
+  {
+    path: '/en/',
+    element: <App />,
+  },
+  {
+    path: '/en/docs/',
+    element: <App />,
+  },
+]
 
 export default App
