@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, RefObject } from 'react';
+import React, { useRef, useEffect, useCallback, type RefObject } from 'react';
 
 export interface MouseSparkConfig {
   color?: string;
@@ -12,7 +12,7 @@ export interface MouseSparkConfig {
 export interface MouseSparkProps extends MouseSparkConfig {
   className?: string;
   style?: React.CSSProperties;
-  containerRef?: RefObject<HTMLDivElement>;
+  containerRef?: RefObject<HTMLDivElement | null>;
 }
 
 interface Spark {
@@ -58,7 +58,7 @@ const defaultProps: Required<MouseSparkConfig> = {
 };
 
 export function useMouseSpark(
-  canvasRef: RefObject<HTMLCanvasElement>,
+  canvasRef: RefObject<HTMLCanvasElement | null>,
   config: MouseSparkConfig = {}
 ) {
   const configRef = useRef({ ...defaultProps, ...config });

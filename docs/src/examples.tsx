@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MouseSparkReact, { MouseSparkConfig } from './MouseSparkReact';
+import MouseSparkReact, { type MouseSparkConfig } from './MouseSparkReact';
 
 export const BasicExample: React.FC = () => {
   return (

@@ -2,93 +2,380 @@ import { useState } from 'react'
 import MouseSparkReact from './MouseSparkReact'
 import './App.css'
 
+const i18n = {
+  zh: {
+    heroTitle: 'BASpark React',
+    heroSubtitle: '蔚蓝档案风格的鼠标点击特效组件。点击页面任意位置查看效果！',
+    heroLink: '提取自 BASpark Windows 桌面工具',
+    heroLinkTrail: '点击拖动鼠标查看尾迹效果',
+    btnGithub: '查看源码',
+    btnQuickStart: '快速开始',
+    liveDemo: '实时演示',
+    effectSettings: '特效设置',
+    effectSettingsDesc: '调整参数自定义火花效果',
+    color: '颜色',
+    scale: '大小',
+    opacity: '透明度',
+    speed: '速度',
+    alwaysTrail: '始终尾迹模式',
+    colors: '颜色预设',
+    colorsDesc: '点击快速应用配色主题',
+    presetBlue: '蔚蓝档案蓝',
+    presetPink: '樱花粉',
+    presetGreen: '薄荷绿',
+    presetGold: '黄金时刻',
+    presetTwilight: '暮光紫',
+    quickStart: '快速开始',
+    install: '安装',
+    basicUsage: '基础用法',
+    withConfig: '带配置',
+    btnFullDoc: '完整文档',
+    features: '特性',
+    featureClick: '点击特效',
+    featureClickDesc: '粒子爆发与扩散波纹动画',
+    featureCustom: '可定制',
+    featureCustomDesc: '完全控制颜色、大小、速度和透明度',
+    featureTrail: '尾迹效果',
+    featureTrailDesc: '平滑的鼠标拖动尾迹粒子',
+    featurePerf: '高性能',
+    featurePerfDesc: '对象池复用和优化渲染循环',
+    about: '关于',
+    aboutOrigin: '项目来源',
+    aboutOriginDesc: '提取自 BASpark，一个使用 WPF + WebView2 混合架构的 Windows 鼠标特效工具，复刻蔚蓝档案 UI 交互风格。',
+    aboutIncluded: '包含内容',
+    aboutIncludedDesc: '从 src/Web/index.html 提取核心 Canvas 动效逻辑，重构为独立的 React TypeScript 组件，可直接用于前端项目。',
+    aboutVisual: '视觉风格',
+    aboutVisualDesc: '灵感源自 Nexon / Yostar 蔚蓝档案。视觉风格版权归原游戏作者所有。',
+    footerMade: '由 Doom 用 ❤️ 制作',
+    footerLicense: 'MIT 许可证 • 提取自 BASpark',
+    documentation: '完整文档',
+    docTitle: 'BASpark React 文档',
+    docIntro: '将 BASpark 的核心点击特效封装为 React TSX 组件。',
+    docFeatures: '特性',
+    docInstall: '安装',
+    docBasicUsage: '基础用法',
+    docConfig: '配置项',
+    docConfigTable: [
+      ['属性', '类型', '默认值', '说明'],
+      ['color', 'string', "'45,175,255'", 'RGB颜色值，格式为 R,G,B'],
+      ['scale', 'number', '1.5', '特效大小比例 (0.5-3)'],
+      ['opacity', 'number', '1.0', '整体透明度 (0.1-1)'],
+      ['speed', 'number', '1.0', '动画速度 (0.2-3)'],
+      ['maxTrail', 'number', '16', '鼠标拖拽尾迹最大长度'],
+      ['enableTrail', 'boolean', 'false', '是否始终显示鼠标移动尾迹'],
+      ['className', 'string', '-', '容器CSS类名'],
+      ['style', 'CSSProperties', '-', '容器样式'],
+      ['containerRef', 'RefObject', '-', '容器DOM引用'],
+    ],
+    docHook: '使用 Hook',
+    docHookDesc: '如果你想自定义事件处理或集成到现有系统中，可以使用 useMouseSpark hook：',
+    docHookManual: '// 手动触发特效',
+    docBackDemo: '返回演示',
+  },
+  en: {
+    heroTitle: 'BASpark React',
+    heroSubtitle: 'Blue Archive style mouse spark effect for your React app. Click anywhere to see the magic!',
+    heroLink: 'Extracted from BASpark Windows tool',
+    heroLinkTrail: 'Drag while clicking to see trail effect',
+    btnGithub: 'View Source',
+    btnQuickStart: 'Quick Start',
+    liveDemo: 'LIVE DEMO',
+    effectSettings: 'Effect Settings',
+    effectSettingsDesc: 'Adjust parameters to customize the spark effect',
+    color: 'Color',
+    scale: 'Scale',
+    opacity: 'Opacity',
+    speed: 'Speed',
+    alwaysTrail: 'Always Trail Mode',
+    colors: 'COLORS',
+    colorsDesc: 'Click to instantly apply a color theme',
+    presetBlue: 'Blue Archive',
+    presetPink: 'Sakura Pink',
+    presetGreen: 'Mint Green',
+    presetGold: 'Golden Hour',
+    presetTwilight: 'Twilight',
+    quickStart: 'Quick Start',
+    install: 'Install',
+    basicUsage: 'Basic Usage',
+    withConfig: 'With Config',
+    btnFullDoc: 'Full Documentation',
+    features: 'Features',
+    featureClick: 'Click Effect',
+    featureClickDesc: 'Particle burst with expanding wave ripple animation',
+    featureCustom: 'Customizable',
+    featureCustomDesc: 'Full control over color, size, speed, and opacity',
+    featureTrail: 'Trail Effect',
+    featureTrailDesc: 'Smooth mouse drag trail with gradient particles',
+    featurePerf: 'Performant',
+    featurePerfDesc: 'Object pooling and optimized rendering loop',
+    about: 'About',
+    aboutOrigin: 'Project Origin',
+    aboutOriginDesc: 'Extracted from BASpark, a Windows mouse effect tool using WPF + WebView2 architecture to recreate Blue Archive UI interactions.',
+    aboutIncluded: 'What\'s Included',
+    aboutIncludedDesc: 'Core Canvas logic from src/Web/index.html extracted and refactored into a standalone React TypeScript component.',
+    aboutVisual: 'Visual Style',
+    aboutVisualDesc: 'Inspired by Nexon / Yostar Blue Archive. Visual style rights belong to the original game authors.',
+    footerMade: 'Made with ❤️ by Doom',
+    footerLicense: 'MIT License • Extracted from BASpark',
+    documentation: 'Documentation',
+    docTitle: 'BASpark React Documentation',
+    docIntro: 'React TSX component extracted from BASpark core canvas effect.',
+    docFeatures: 'Features',
+    docInstall: 'Install',
+    docBasicUsage: 'Basic Usage',
+    docConfig: 'Configuration',
+    docConfigTable: [
+      ['Property', 'Type', 'Default', 'Description'],
+      ['color', 'string', "'45,175,255'", 'RGB color value, format: R,G,B'],
+      ['scale', 'number', '1.5', 'Effect size ratio (0.5-3)'],
+      ['opacity', 'number', '1.0', 'Overall opacity (0.1-1)'],
+      ['speed', 'number', '1.0', 'Animation speed (0.2-3)'],
+      ['maxTrail', 'number', '16', 'Max mouse drag trail length'],
+      ['enableTrail', 'boolean', 'false', 'Always show mouse movement trail'],
+      ['className', 'string', '-', 'Container CSS class'],
+      ['style', 'CSSProperties', '-', 'Container style'],
+      ['containerRef', 'RefObject', '-', 'Container DOM reference'],
+    ],
+    docHook: 'Using Hook',
+    docHookDesc: 'Use useMouseSpark hook for custom event handling:',
+    docHookManual: '// Manually trigger effect',
+    docBackDemo: 'Back to Demo',
+  }
+}
+
+type Lang = 'zh' | 'en'
+
 function App() {
+  const [lang, setLang] = useState<Lang>('zh')
   const [config, setConfig] = useState({
     color: '45,175,255',
     scale: 1.5,
     opacity: 1.0,
     speed: 1.0,
     maxTrail: 16,
-    enableTrail: false,
+    enableTrail: true,
   })
+  const [showDoc, setShowDoc] = useState(false)
+
+  const t = i18n[lang]
+
+  const presets = [
+    { name: t.presetBlue, color: '45,175,255', rgb: 'rgb(45,175,255)' },
+    { name: t.presetPink, color: '255,107,157', rgb: 'rgb(255,107,157)' },
+    { name: t.presetGreen, color: '92,214,163', rgb: 'rgb(92,214,163)' },
+    { name: t.presetGold, color: '255,179,71', rgb: 'rgb(255,179,71)' },
+    { name: t.presetTwilight, color: '180,100,255', rgb: 'rgb(180,100,255)' },
+  ]
+
+  if (showDoc) {
+    return (
+      <>
+        <MouseSparkReact {...config} />
+        <div style={{ 
+          position: 'fixed', 
+          top: 0, 
+          right: 0, 
+          padding: '16px 20px', 
+          display: 'flex', 
+          gap: '16px', 
+          alignItems: 'center',
+          zIndex: 10000,
+          pointerEvents: 'auto',
+        }}>
+          <button 
+            onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+            className="ba-button-outline"
+            style={{ padding: '8px 16px', fontSize: '13px' }}
+          >
+            {lang === 'zh' ? 'EN' : '中文'}
+          </button>
+          <button 
+            onClick={() => setShowDoc(false)}
+            className="ba-button"
+            style={{ padding: '8px 16px', fontSize: '13px' }}
+          >
+            {t.docBackDemo}
+          </button>
+        </div>
+
+        <section className="hero-section" style={{ minHeight: '30vh' }}>
+          <h1 className="hero-title">{t.docTitle}</h1>
+          <p className="hero-subtitle">{t.docIntro}</p>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <section className="quickstart-section">
+          <h2>{t.docFeatures}</h2>
+          <div className="features-grid">
+            <div className="ba-card feature-card">
+              <h3>{t.featureClick}</h3>
+              <p>{t.featureClickDesc}</p>
+            </div>
+            <div className="ba-card feature-card">
+              <h3>{t.featureCustom}</h3>
+              <p>{t.featureCustomDesc}</p>
+            </div>
+            <div className="ba-card feature-card">
+              <h3>{t.featureTrail}</h3>
+              <p>{t.featureTrailDesc}</p>
+            </div>
+            <div className="ba-card feature-card">
+              <h3>{t.featurePerf}</h3>
+              <p>{t.featurePerfDesc}</p>
+            </div>
+          </div>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <section className="quickstart-section">
+          <h2>{t.docInstall}</h2>
+          <div className="ba-code-block">
+            <code>npm install baspark-react</code>
+          </div>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <section className="quickstart-section">
+          <h2>{t.docBasicUsage}</h2>
+          <div className="ba-code-block">
+            <code>{`import MouseSparkReact from 'baspark-react';
+
+function App() {
+  return <MouseSparkReact />;
+}`}</code>
+          </div>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <section className="quickstart-section">
+          <h2>{t.docConfig}</h2>
+          <div className="ba-card" style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+              <thead>
+                <tr style={{ borderBottom: '2px solid var(--ba-blue)' }}>
+                  {t.docConfigTable[0].map((header, i) => (
+                    <th key={i} style={{ padding: '12px', textAlign: i === 0 ? 'left' : 'left', fontWeight: 600 }}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {t.docConfigTable.slice(1).map((row, i) => (
+                  <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
+                    {row.map((cell, j) => (
+                      <td key={j} style={{ padding: '12px', color: j === 0 ? 'var(--ba-blue)' : 'var(--text-secondary)' }}>
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <section className="quickstart-section">
+          <h2>{t.docHook}</h2>
+          <p style={{ marginBottom: '16px', color: 'var(--text-secondary)' }}>{t.docHookDesc}</p>
+          <div className="ba-code-block">
+            <code>{`import { useMouseSpark } from 'baspark-react';
+
+function CustomComponent() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { boom } = useMouseSpark(canvasRef, {
+    color: '255,200,100',
+    scale: 1.8,
+  });
+
+  ${t.docHookManual}
+  const trigger = (x, y) => boom(x, y);
+
+  return <canvas ref={canvasRef} />;
+}`}</code>
+          </div>
+        </section>
+
+        <div className="ba-section-divider" />
+
+        <footer className="footer">
+          <p>{t.footerMade.replace('❤️', '')}</p>
+          <p className="footer-note">{t.footerLicense}</p>
+        </footer>
+      </>
+    )
+  }
 
   return (
     <>
       <MouseSparkReact {...config} />
       
-      <section id="center">
-        <div className="hero">
-          <div style={{ fontSize: '64px', marginBottom: '20px' }}>✨</div>
-        </div>
-        <div>
-          <h1 style={{ margin: '0 0 16px 0', fontSize: '48px' }}>BASpark React</h1>
-          <p style={{ fontSize: '18px', maxWidth: '600px', lineHeight: '1.6', marginBottom: '16px' }}>
-            Blue Archive style mouse spark effect React component.
-            Click anywhere to see the spark effect!
-          </p>
-          <p style={{ fontSize: '14px', marginTop: '12px', color: '#666' }}>
-            Extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a> Windows mouse effect tool
-          </p>
-          <p style={{ fontSize: '14px', marginTop: '8px', color: '#888' }}>
-            Drag mouse while clicking to see trail effect
-          </p>
-        </div>
+      <div style={{ 
+        position: 'fixed', 
+        top: 0, 
+        right: 0, 
+        padding: '16px 20px', 
+        zIndex: 10000,
+        pointerEvents: 'auto',
+      }}>
+        <button 
+          onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+          className="ba-button-outline"
+          style={{ padding: '8px 16px', fontSize: '13px' }}
+        >
+          {lang === 'zh' ? 'EN' : '中文'}
+        </button>
+      </div>
+
+      <section className="hero-section">
+        <h1 className="hero-title">{t.heroTitle}</h1>
+        <p className="hero-subtitle">{t.heroSubtitle}</p>
+        <p className="hero-link">
+          {t.heroLink} (<a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a>)
+        </p>
+        <p className="hero-link" style={{ marginTop: '4px' }}>
+          {t.heroLinkTrail}
+        </p>
         
-        <div style={{ marginTop: '32px', display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a 
-            href="https://github.com/DoomVoss/BASpark" 
-            target="_blank"
-            style={{
-              padding: '12px 24px',
-              background: '#24292f',
-              color: '#fff',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              fontWeight: '500',
-              pointerEvents: 'auto',
-            }}
-          >
-            GitHub Repository
+        <div className="hero-actions">
+          <a href="https://github.com/DoomVoss/BASpark" target="_blank" className="ba-button">
+            {t.btnGithub}
           </a>
-          <a 
-            href="#usage" 
-            style={{
-              padding: '12px 24px',
-              background: 'rgba(45,175,255,0.2)',
-              color: '#2dafff',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              fontWeight: '500',
-              pointerEvents: 'auto',
-            }}
-          >
-            Quick Start
-          </a>
+          <button onClick={() => setShowDoc(true)} className="ba-button-outline">
+            {t.btnQuickStart}
+          </button>
         </div>
       </section>
 
-      <div className="ticks"></div>
+      <div className="ba-section-divider" />
 
-      <section id="next-steps">
-        <div id="docs">
-          <h2>⚡ Live Demo Settings</h2>
-          <p style={{ marginBottom: '16px', color: '#666' }}>
-            Adjust these settings to customize the effect
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-              <span style={{ width: '80px' }}>Color (RGB):</span>
+      <section className="settings-section">
+        <div className="settings-grid">
+          <div className="ba-card settings-card">
+            <span className="section-badge">{t.liveDemo}</span>
+            <h2>{t.effectSettings}</h2>
+            <p>{t.effectSettingsDesc}</p>
+            
+            <div className="setting-item">
+              <span className="setting-label">{t.color}</span>
               <input
                 type="text"
                 value={config.color}
                 onChange={(e) => setConfig({ ...config, color: e.target.value })}
+                className="ba-text-input"
+                style={{ flex: 1 }}
                 placeholder="R,G,B"
-                style={{ width: '120px', padding: '4px 8px' }}
               />
-            </label>
-
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-              <span style={{ width: '80px' }}>Scale:</span>
+            </div>
+            
+            <div className="setting-item">
+              <span className="setting-label">{t.scale}</span>
               <input
                 type="range"
                 min="0.5"
@@ -96,13 +383,14 @@ function App() {
                 step="0.1"
                 value={config.scale}
                 onChange={(e) => setConfig({ ...config, scale: parseFloat(e.target.value) })}
-                style={{ width: '120px' }}
+                className="ba-slider"
+                style={{ flex: 1 }}
               />
-              <span style={{ width: '40px' }}>{config.scale.toFixed(1)}</span>
-            </label>
-
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-              <span style={{ width: '80px' }}>Opacity:</span>
+              <span className="setting-value">{config.scale.toFixed(1)}</span>
+            </div>
+            
+            <div className="setting-item">
+              <span className="setting-label">{t.opacity}</span>
               <input
                 type="range"
                 min="0.1"
@@ -110,13 +398,14 @@ function App() {
                 step="0.1"
                 value={config.opacity}
                 onChange={(e) => setConfig({ ...config, opacity: parseFloat(e.target.value) })}
-                style={{ width: '120px' }}
+                className="ba-slider"
+                style={{ flex: 1 }}
               />
-              <span style={{ width: '40px' }}>{config.opacity.toFixed(1)}</span>
-            </label>
-
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-              <span style={{ width: '80px' }}>Speed:</span>
+              <span className="setting-value">{config.opacity.toFixed(1)}</span>
+            </div>
+            
+            <div className="setting-item">
+              <span className="setting-label">{t.speed}</span>
               <input
                 type="range"
                 min="0.2"
@@ -124,168 +413,82 @@ function App() {
                 step="0.1"
                 value={config.speed}
                 onChange={(e) => setConfig({ ...config, speed: parseFloat(e.target.value) })}
-                style={{ width: '120px' }}
+                className="ba-slider"
+                style={{ flex: 1 }}
               />
-              <span style={{ width: '40px' }}>{config.speed.toFixed(1)}</span>
-            </label>
-
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+              <span className="setting-value">{config.speed.toFixed(1)}</span>
+            </div>
+            
+            <label className="ba-checkbox" style={{ marginTop: '12px' }}>
               <input
                 type="checkbox"
                 checked={config.enableTrail}
                 onChange={(e) => setConfig({ ...config, enableTrail: e.target.checked })}
               />
-              <span>Always Trail Mode</span>
+              <span>{t.alwaysTrail}</span>
             </label>
           </div>
-        </div>
 
-        <div id="social">
-          <h2>🎨 Preset Colors</h2>
-          <p style={{ marginBottom: '16px', color: '#666' }}>
-            Click to apply preset color themes
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              { name: 'Blue Archive Blue', color: '45,175,255' },
-              { name: 'Pink', color: '255,100,150' },
-              { name: 'Green', color: '100,255,150' },
-              { name: 'Gold', color: '255,200,50' },
-              { name: 'Purple', color: '180,100,255' },
-            ].map((preset) => (
-              <button
-                key={preset.color}
-                onClick={() => setConfig({ ...config, color: preset.color })}
-                style={{
-                  padding: '8px 16px',
-                  border: '1px solid var(--border)',
-                  borderRadius: '4px',
-                  background: `rgba(${preset.color}, 0.2)`,
-                  cursor: 'pointer',
-                  fontFamily: 'var(--sans)',
-                  transition: 'all 0.2s',
-                }}
-              >
-                {preset.name}
-              </button>
-            ))}
+          <div className="ba-card settings-card">
+            <span className="section-badge">{t.colors}</span>
+            <h2>{t.colorsDesc}</h2>
+            <p style={{ marginBottom: '24px' }}></p>
+            
+            <div className="preset-grid">
+              {presets.map((preset) => (
+                <button
+                  key={preset.color}
+                  onClick={() => setConfig({ ...config, color: preset.color })}
+                  className="preset-button"
+                  style={{
+                    borderColor: preset.rgb,
+                    color: preset.rgb,
+                    background: config.color === preset.color 
+                      ? `rgba(${preset.color}, 0.15)` 
+                      : 'transparent',
+                  }}
+                >
+                  {preset.name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="ticks"></div>
+      <div className="ba-section-divider" />
 
-      <section id="usage" style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>📦 Quick Start</h2>
+      <section className="about-section">
+        <h2>{t.about}</h2>
         
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3 style={{ marginTop: 0 }}>Installation</h3>
-          <code style={{ display: 'block', whiteSpace: 'pre-wrap', fontSize: '14px' }}>
-npm install baspark-react
-          </code>
+        <div className="ba-card about-card">
+          <h3>{t.aboutOrigin}</h3>
+          <p>{t.aboutOriginDesc}</p>
         </div>
-
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3 style={{ marginTop: 0 }}>Basic Usage</h3>
-          <code style={{ display: 'block', whiteSpace: 'pre-wrap', fontSize: '14px' }}>
-{`import MouseSparkReact from 'baspark-react';
-
-function App() {
-  return <MouseSparkReact color="45,175,255" />;
-}`}
-          </code>
+        
+        <div className="ba-card about-card">
+          <h3>{t.aboutIncluded}</h3>
+          <p>{t.aboutIncludedDesc}</p>
         </div>
-
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px' }}>
-          <h3 style={{ marginTop: 0 }}>With Configuration</h3>
-          <code style={{ display: 'block', whiteSpace: 'pre-wrap', fontSize: '14px' }}>
-{`<MouseSparkReact
-  color="255,100,150"
-  scale={2.0}
-  opacity={0.8}
-  speed={1.5}
-  enableTrail={true}
-/>`}
-          </code>
+        
+        <div className="ba-card about-card">
+          <h3>{t.aboutVisual}</h3>
+          <p>{t.aboutVisualDesc}</p>
         </div>
-
+        
         <div style={{ textAlign: 'center', marginTop: '32px' }}>
-          <a 
-            href="https://github.com/DoomVoss/BASpark#readme" 
-            target="_blank"
-            style={{ color: 'var(--accent)', textDecoration: 'none' }}
+          <button 
+            onClick={() => setShowDoc(true)}
+            className="ba-button-outline"
           >
-            View Full Documentation →
-          </a>
+            {t.btnFullDoc} →
+          </button>
         </div>
       </section>
 
-      <div className="ticks"></div>
-
-      <section style={{ padding: '40px 20px', textAlign: 'center' }}>
-        <h2 style={{ marginBottom: '16px' }}>✨ Features</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ padding: '16px', background: 'var(--code-bg)', borderRadius: '8px' }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>🎯</div>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Click Effect</h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>Particle burst with wave ripple</p>
-          </div>
-          <div style={{ padding: '16px', background: 'var(--code-bg)', borderRadius: '8px' }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>🌈</div>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Customizable</h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>Color, size, speed, opacity</p>
-          </div>
-          <div style={{ padding: '16px', background: 'var(--code-bg)', borderRadius: '8px' }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>✨</div>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Trail Effect</h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>Mouse drag trail particles</p>
-          </div>
-          <div style={{ padding: '16px', background: 'var(--code-bg)', borderRadius: '8px' }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>⚡</div>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>Performant</h3>
-            <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>Object pooling optimization</p>
-          </div>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>📖 About</h2>
-        
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>Project Origin</h3>
-          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
-            This React component is extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a>, 
-            a Windows mouse effect tool that uses <strong>WPF + WebView2</strong> hybrid architecture to recreate Blue Archive UI style interactions.
-          </p>
-        </div>
-
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
-          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>What's Extracted</h3>
-          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
-            The core Canvas effect logic from <code style={{ background: '#fff', padding: '2px 6px', borderRadius: '3px' }}>src/Web/index.html</code> 
-            has been extracted and refactored into a standalone React TypeScript component, making it usable in any React frontend project.
-          </p>
-        </div>
-
-        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px' }}>
-          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>Visual Style</h3>
-          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
-            Visual style inspired by <strong>Nexon / Yostar Blue Archive</strong>. All rights belong to the original game author.
-          </p>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      
-      <footer style={{ padding: '32px 20px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
-        <p style={{ margin: 0, color: '#666' }}>
-          Made with ❤️ by <a href="https://github.com/DoomVoss" target="_blank" style={{ color: 'var(--accent)' }}>Doom</a>
-        </p>
-        <p style={{ margin: '8px 0 0 0', fontSize: '12px', color: '#999' }}>
-          MIT License • Extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a>
-        </p>
+      <footer className="footer">
+        <p>{t.footerMade.replace('❤️', '')}</p>
+        <p className="footer-note">{t.footerLicense}</p>
       </footer>
     </>
   )
