@@ -58,7 +58,7 @@ const defaultProps: Required<MouseSparkConfig> = {
 };
 
 export function useMouseSpark(
-  canvasRef: RefObject<HTMLCanvasElement>,
+  canvasRef: RefObject<HTMLCanvasElement | null>,
   config: MouseSparkConfig = {}
 ) {
   const configRef = useRef({ ...defaultProps, ...config });

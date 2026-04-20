@@ -2,9 +2,16 @@
   "name": "baspark-react",
   "version": "1.0.0",
   "description": "Blue Archive style mouse spark effect React component",
-  "main": "index.ts",
+  "main": "MouseSparkReact.tsx",
   "module": "MouseSparkReact.tsx",
   "types": "MouseSparkReact.tsx",
+  "exports": {
+    ".": {
+      "import": "./MouseSparkReact.tsx",
+      "types": "./MouseSparkReact.tsx",
+      "default": "./MouseSparkReact.tsx"
+    }
+  },
   "keywords": [
     "react",
     "typescript",
@@ -25,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/DoomVoss/BASpark/issues"
   },
-  "homepage": "https://github.com/DoomVoss/BASpark#readme",
+  "homepage": "https://doomvoss.github.io/BASpark/",
   "files": [
     "MouseSparkReact.tsx",
     "index.ts",
@@ -38,14 +45,18 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "demo": "cd demo && npm run dev",
-    "demo:build": "cd demo && npm run build",
-    "test:e2e": "cd demo && npm run test:e2e",
-    "test:e2e:ui": "cd demo && npm run test:e2e:ui"
+    "docs:install": "cd docs && npm install",
+    "docs:dev": "cd docs && npm run dev",
+    "docs:build": "cd docs && npm run build",
+    "docs:preview": "cd docs && npm run preview",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
   }
 }
