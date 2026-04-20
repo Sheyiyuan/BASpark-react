@@ -1,0 +1,51 @@
+{
+  "name": "baspark-react",
+  "version": "1.0.0",
+  "description": "Blue Archive style mouse spark effect React component",
+  "main": "index.ts",
+  "module": "MouseSparkReact.tsx",
+  "types": "MouseSparkReact.tsx",
+  "keywords": [
+    "react",
+    "typescript",
+    "mouse-effect",
+    "spark",
+    "particle",
+    "canvas",
+    "blue-archive",
+    "click-effect",
+    "animation"
+  ],
+  "author": "Doom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DoomVoss/BASpark"
+  },
+  "bugs": {
+    "url": "https://github.com/DoomVoss/BASpark/issues"
+  },
+  "homepage": "https://github.com/DoomVoss/BASpark#readme",
+  "files": [
+    "MouseSparkReact.tsx",
+    "index.ts",
+    "examples.tsx",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "demo": "cd demo && npm run dev",
+    "demo:build": "cd demo && npm run build",
+    "test:e2e": "cd demo && npm run test:e2e",
+    "test:e2e:ui": "cd demo && npm run test:e2e:ui"
+  }
+}
