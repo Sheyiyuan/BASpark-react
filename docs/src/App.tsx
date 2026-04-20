@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { RouteRecord } from 'vite-react-ssg'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import MouseSparkReact from './MouseSparkReact'
 import CodeBlock from './CodeBlock.tsx'
 import './App.css'
@@ -535,14 +535,34 @@ function App() {
   )
 }
 
+function RouteRedirect({ to }: { to: string }) {
+  const base = import.meta.env.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
+  const normalizedTo = to.startsWith('/') ? to.slice(1) : to
+  const targetHref = `${normalizedBase}${normalizedTo}`
+
+  useEffect(() => {
+    window.location.replace(targetHref)
+  }, [targetHref])
+
+  return (
+    <main className="quickstart-section" style={{ minHeight: '40vh', textAlign: 'center' }}>
+      <h2>Redirecting...</h2>
+      <p>
+        <a href={targetHref}>Continue</a>
+      </p>
+    </main>
+  )
+}
+
 export const routes: RouteRecord[] = [
   {
     path: '/',
-    element: <Navigate to="/zh/" replace />,
+    element: <RouteRedirect to="/zh/" />,
   },
   {
     path: '/docs/',
-    element: <Navigate to="/zh/docs/" replace />,
+    element: <RouteRedirect to="/zh/docs/" />,
   },
   {
     path: '/zh/',
