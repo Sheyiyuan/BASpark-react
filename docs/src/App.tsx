@@ -22,11 +22,14 @@ function App() {
         </div>
         <div>
           <h1 style={{ margin: '0 0 16px 0', fontSize: '48px' }}>BASpark React</h1>
-          <p style={{ fontSize: '18px', maxWidth: '600px', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '18px', maxWidth: '600px', lineHeight: '1.6', marginBottom: '16px' }}>
             Blue Archive style mouse spark effect React component.
             Click anywhere to see the spark effect!
           </p>
           <p style={{ fontSize: '14px', marginTop: '12px', color: '#666' }}>
+            Extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a> Windows mouse effect tool
+          </p>
+          <p style={{ fontSize: '14px', marginTop: '8px', color: '#888' }}>
             Drag mouse while clicking to see trail effect
           </p>
         </div>
@@ -246,13 +249,42 @@ function App() {
       </section>
 
       <div className="ticks"></div>
+
+      <section style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>📖 About</h2>
+        
+        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
+          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>Project Origin</h3>
+          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
+            This React component is extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a>, 
+            a Windows mouse effect tool that uses <strong>WPF + WebView2</strong> hybrid architecture to recreate Blue Archive UI style interactions.
+          </p>
+        </div>
+
+        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
+          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>What's Extracted</h3>
+          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
+            The core Canvas effect logic from <code style={{ background: '#fff', padding: '2px 6px', borderRadius: '3px' }}>src/Web/index.html</code> 
+            has been extracted and refactored into a standalone React TypeScript component, making it usable in any React frontend project.
+          </p>
+        </div>
+
+        <div style={{ background: 'var(--code-bg)', padding: '20px', borderRadius: '8px' }}>
+          <h3 style={{ marginTop: 0, marginBottom: '12px' }}>Visual Style</h3>
+          <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: '#666' }}>
+            Visual style inspired by <strong>Nexon / Yostar Blue Archive</strong>. All rights belong to the original game author.
+          </p>
+        </div>
+      </section>
+
+      <div className="ticks"></div>
       
       <footer style={{ padding: '32px 20px', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
         <p style={{ margin: 0, color: '#666' }}>
           Made with ❤️ by <a href="https://github.com/DoomVoss" target="_blank" style={{ color: 'var(--accent)' }}>Doom</a>
         </p>
         <p style={{ margin: '8px 0 0 0', fontSize: '12px', color: '#999' }}>
-          MIT License • Based on <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a>
+          MIT License • Extracted from <a href="https://github.com/DoomVoss/BASpark" target="_blank" style={{ color: 'var(--accent)' }}>BASpark</a>
         </p>
       </footer>
     </>
