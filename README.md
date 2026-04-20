@@ -1,10 +1,12 @@
-# BASpark React
+# BASpark-react
 
 [![npm version](https://img.shields.io/npm/v/baspark-react.svg)](https://www.npmjs.com/package/baspark-react)
-[![GitHub license](https://img.shields.io/github/license/Sheyiyuan/BASpark.svg)](https://github.com/Sheyiyuan/BASpark/blob/main/LICENSE)
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://sheyiyuan.github.io/BASpark/)
+[![npm downloads](https://img.shields.io/npm/dm/baspark-react.svg)](https://www.npmjs.com/package/baspark-react)
+[![React](https://img.shields.io/badge/React-16.8%2B-61dafb?logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178c6?logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/github/license/Sheyiyuan/BASpark.svg)](https://github.com/Sheyiyuan/BASpark/blob/main/LICENSE)
 
-将 BASpark 的核心点击特效封装为 React TSX 组件。
+基于 HTML5/Canvas 深度复刻《蔚蓝档案》UI 风格动效的鼠标特效
 
 ## 项目来源
 

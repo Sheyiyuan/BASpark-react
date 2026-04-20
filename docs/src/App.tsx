@@ -4,7 +4,7 @@ import './App.css'
 
 const i18n = {
   zh: {
-    heroTitle: 'BASpark React',
+    heroTitle: 'BASpark-react',
     heroSubtitle: '蔚蓝档案风格的鼠标点击特效组件。点击页面任意位置查看效果！',
     heroLink: '提取自 BASpark Windows 桌面工具',
     heroLinkTrail: '点击拖动鼠标查看尾迹效果',
@@ -49,7 +49,7 @@ const i18n = {
     footerAuthors: '原作者: Doom (@DoomVoss) | React提取: Sheyiyuan (@Sheyiyuan)',
     footerLicense: 'MIT License',
     documentation: '完整文档',
-    docTitle: 'BASpark React 文档',
+    docTitle: 'BASpark-react 文档',
     docIntro: '将 BASpark 的核心点击特效封装为 React TSX 组件。',
     docFeatures: '特性',
     docInstall: '安装',
@@ -73,7 +73,7 @@ const i18n = {
     docBackDemo: '返回演示',
   },
   en: {
-    heroTitle: 'BASpark React',
+    heroTitle: 'BASpark-react',
     heroSubtitle: 'Blue Archive style mouse spark effect for your React app. Click anywhere to see the magic!',
     heroLink: 'Extracted from BASpark Windows tool',
     heroLinkTrail: 'Drag while clicking to see trail effect',
@@ -118,7 +118,7 @@ const i18n = {
     footerAuthors: 'Original: Doom (@DoomVoss) | React extraction: Sheyiyuan (@Sheyiyuan)',
     footerLicense: 'MIT License',
     documentation: 'Documentation',
-    docTitle: 'BASpark React Documentation',
+    docTitle: 'BASpark-react Documentation',
     docIntro: 'React TSX component extracted from BASpark core canvas effect.',
     docFeatures: 'Features',
     docInstall: 'Install',
@@ -335,6 +335,11 @@ function CustomComponent() {
 
       <section className="hero-section">
         <h1 className="hero-title">{t.heroTitle}</h1>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <img src="https://img.shields.io/npm/v/baspark-react.svg?style=flat-square" alt="npm version" />
+          <img src="https://img.shields.io/badge/React-16.8%2B-61dafb?logo=react&style=flat-square" alt="React" />
+          <img src="https://img.shields.io/badge/TypeScript-5.0%2B-3178c6?logo=typescript&style=flat-square" alt="TypeScript" />
+        </div>
         <p className="hero-subtitle">{t.heroSubtitle}</p>
         <p className="hero-link">
           {t.heroLink} (<a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a>)
