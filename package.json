@@ -23,16 +23,23 @@
     "click-effect",
     "animation"
   ],
-  "author": "Doom",
+  "author": "Sheyiyuan",
+  "contributors": [
+    {
+      "name": "Doom",
+      "url": "https://github.com/DoomVoss",
+      "role": "Original BASpark author (WPF + WebView2)"
+    }
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DoomVoss/BASpark"
+    "url": "https://github.com/Sheyiyuan/BASpark"
   },
   "bugs": {
-    "url": "https://github.com/DoomVoss/BASpark/issues"
+    "url": "https://github.com/Sheyiyuan/BASpark/issues"
   },
-  "homepage": "https://doomvoss.github.io/BASpark/",
+  "homepage": "https://github.com/Sheyiyuan/BASpark#readme",
   "files": [
     "MouseSparkReact.tsx",
     "index.ts",

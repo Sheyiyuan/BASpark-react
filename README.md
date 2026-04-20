@@ -1,8 +1,8 @@
 # BASpark React
 
 [![npm version](https://img.shields.io/npm/v/baspark-react.svg)](https://www.npmjs.com/package/baspark-react)
-[![GitHub license](https://img.shields.io/github/license/DoomVoss/BASpark.svg)](https://github.com/DoomVoss/BASpark/blob/main/LICENSE)
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://doomvoss.github.io/BASpark/)
+[![GitHub license](https://img.shields.io/github/license/Sheyiyuan/BASpark.svg)](https://github.com/Sheyiyuan/BASpark/blob/main/LICENSE)
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://sheyiyuan.github.io/BASpark/)
 
 将 BASpark 的核心点击特效封装为 React TSX 组件。
 
@@ -149,7 +149,7 @@ function CustomComponent() {
 
 ## 在线演示
 
-访问 [GitHub Pages Demo](https://doomvoss.github.io/BASpark/) 查看在线演示。
+访问 [GitHub Pages Demo](https://sheyiyuan.github.io/BASpark/) 查看在线演示。
 
 本地运行：
 
@@ -179,35 +179,31 @@ npm run test:e2e:report # 查看 HTML 报告
 - UI 完整性
 - 多次点击处理
 
-## 许可证
+---
+
+## Authors
+
+| 角色 | 名字 | GitHub |
+|------|------|--------|
+| 原项目作者 | Doom | [@DoomVoss](https://github.com/DoomVoss) |
+| React 提取/改造 | Sheyiyuan | [@Sheyiyuan](https://github.com/Sheyiyuan) |
+
+原项目 [BASpark](https://github.com/DoomVoss/BASpark) 由 Doom 开发，采用 WPF + WebView2 混合架构。
+本项目由 Sheyiyuan 提取核心 Canvas 动效逻辑，重构为 React TypeScript 组件。
+
+---
+
+## License
 
 MIT License
 
-Copyright (c) 2026 Doom
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+- Original work: Copyright (c) 2026 Doom
+- React extraction: Copyright (c) 2026 Sheyiyuan
 
 ---
 
 ## 免责声明
 
 - 本软件为同人爱好交流项目，严禁任何形式的倒卖行为。
-- 本程序不含任何病毒或恶意代码，仅用于桌面视觉特效。
 - 软件按"原样"提供，作者不对使用过程中可能产生的任何直接或间接损失承担责任。
 - 视觉风格灵感来源于 Nexon / Yostar《Blue Archive》，版权归原作者所有。

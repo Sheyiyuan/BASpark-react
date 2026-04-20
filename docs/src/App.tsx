@@ -46,8 +46,8 @@ const i18n = {
     aboutIncludedDesc: '从 src/Web/index.html 提取核心 Canvas 动效逻辑，重构为独立的 React TypeScript 组件，可直接用于前端项目。',
     aboutVisual: '视觉风格',
     aboutVisualDesc: '灵感源自 Nexon / Yostar 蔚蓝档案。视觉风格版权归原游戏作者所有。',
-    footerMade: '由 Doom 用 ❤️ 制作',
-    footerLicense: 'MIT 许可证 • 提取自 BASpark',
+    footerAuthors: '原作者: Doom (@DoomVoss) | React提取: Sheyiyuan (@Sheyiyuan)',
+    footerLicense: 'MIT License',
     documentation: '完整文档',
     docTitle: 'BASpark React 文档',
     docIntro: '将 BASpark 的核心点击特效封装为 React TSX 组件。',
@@ -115,8 +115,8 @@ const i18n = {
     aboutIncludedDesc: 'Core Canvas logic from src/Web/index.html extracted and refactored into a standalone React TypeScript component.',
     aboutVisual: 'Visual Style',
     aboutVisualDesc: 'Inspired by Nexon / Yostar Blue Archive. Visual style rights belong to the original game authors.',
-    footerMade: 'Made with ❤️ by Doom',
-    footerLicense: 'MIT License • Extracted from BASpark',
+    footerAuthors: 'Original: Doom (@DoomVoss) | React extraction: Sheyiyuan (@Sheyiyuan)',
+    footerLicense: 'MIT License',
     documentation: 'Documentation',
     docTitle: 'BASpark React Documentation',
     docIntro: 'React TSX component extracted from BASpark core canvas effect.',
@@ -305,8 +305,8 @@ function CustomComponent() {
         <div className="ba-section-divider" />
 
         <footer className="footer">
-          <p>{t.footerMade.replace('❤️', '')}</p>
-          <p className="footer-note">{t.footerLicense}</p>
+          <p>{t.footerAuthors}</p>
+          <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a></p>
         </footer>
       </>
     )
@@ -487,8 +487,8 @@ function CustomComponent() {
       </section>
 
       <footer className="footer">
-        <p>{t.footerMade.replace('❤️', '')}</p>
-        <p className="footer-note">{t.footerLicense}</p>
+        <p>{t.footerAuthors}</p>
+        <p className="footer-note">{t.footerLicense} • <a href="https://github.com/DoomVoss/BASpark" target="_blank">BASpark</a></p>
       </footer>
     </>
   )
